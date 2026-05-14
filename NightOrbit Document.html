@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Anas Farooq - Technical Authority For Nightorbit Project</title>
+    
+    <meta name="description" content="Official Technical Authority Document for Nightorbit. Lead Developer: Anas Farooq. Authorized for Full System Integration, Firebase Security, and Administrative Control.">
+    <meta name="keywords" content="Anas Farooq, Nightorbit, Technical Authority, Lead Developer, Firebase Admin, System Architect">
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "project": "NIGHTORIT (GYIDI)"
+      "name": "Anas Farooq",
+      "givenName": "Anas",
+      "familyName": "Farooq",
+      "jobTitle": "Lead Developer & Admin",
+      "url": "https://nightorbit.github.io",
+      "brand": {
+        "@type": "Brand",
+        "name": "Nightorbit"
+      }
+    }
+    </script>
+
+    <!-- Firebase SDK -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getAuth, signInWithPopup, GoogleAuthProvider, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+
+        // 🔥 YAHAN APNA FIREBASE CONFIG PASTE KAREIN (JO Firebase Console se milega)
+        const firebaseConfig = {
+            apiKey: "YOUR_API_KEY",
+            authDomain: "YOUR_AUTH_DOMAIN",
+            projectId: "YOUR_PROJECT_ID",
+            storageBucket: "YOUR_STORAGE_BUCKET",
+            messagingSenderId: "YOUR_SENDER_ID",
+            appId: "YOUR_APP_ID"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const provider = new GoogleAuthProvider();
+
+        const loginScreen = document.getElementById('login-screen');
+        const mainPage = document.getElementById('main-page');
+        const loginBtn = document.getElementById('google-login-btn');
+
+        window.handleGoogleLogin = async () => {
+            try {
+                await signInWithPopup(auth, provider);
+            } catch (error) {
+                console.error("Login error:", error);
+                alert("Login failed: " + error.message);
+            }
+        };
+
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                // Logged in – show main document
+                loginScreen.style.display = 'none';
+                mainPage.style.display = 'flex';
+            } else {
+                // Logged out – show login screen
+                loginScreen.style.display = 'flex';
+                mainPage.style.display = 'none';
+            }
+        });
+
+        loginBtn.onclick = window.handleGoogleLogin;
+    </script>
+
+    <style>
+        :root { 
+            --neon-blue: #00d2ff; 
+            --gold: #d4af37; 
+            --dark-bg: #05050a; 
+            --glass-bg: rgba(0, 210, 255, 0.03);
+        }
+
+        body {
+            background: var(--dark-bg);
+            display: flex; justify-content: center; align-items: center;
+            height: 100vh; margin: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: white; overflow: hidden;
+        }
+
+        .wrapper { width: 95%; max-width: 440px; height: 98vh; display: flex; flex-direction: column; justify-content: center; }
+
+        /* Login screen (replaces old intro-screen) */
+        #login-screen {
+            background: #000; padding: 30px; border-radius: 15px;
+            border: 1px solid var(--neon-blue); box-shadow: 0 0 40px rgba(0, 210, 255, 0.2);
+            display: flex; flex-direction: column; align-items: center; text-align: center;
+        }
+        #login-screen h2 {
+            color: var(--neon-blue); font-size: 22px; letter-spacing: 3px; margin-bottom: 20px;
+        }
+        #login-screen p {
+            color: #aaa; font-size: 12px; margin-bottom: 30px;
+        }
+        .login-google-btn {
+            background: transparent; color: var(--neon-blue); border: 1px solid var(--neon-blue);
+            padding: 14px; cursor: pointer; font-weight: 900; letter-spacing: 3px;
+            transition: 0.4s; text-transform: uppercase; font-size: 12px; width: 100%;
+            border-radius: 40px;
+        }
+        .login-google-btn:hover {
+            background: var(--neon-blue); color: #000; box-shadow: 0 0 30px var(--neon-blue);
+        }
+
+        #main-page { display: none; height: 100%; flex-direction: column; animation: fadeIn 1s cubic-bezier(0.16, 1, 0.3, 1); }
+
+        .card {
+            background: #000; border: 1px solid #222; border-radius: 20px;
+            padding: 20px; display: flex; flex-direction: column; height: 100%; box-sizing: border-box;
+            box-shadow: 0 0 60px rgba(0, 0, 0, 1); position: relative; overflow-y: auto;
+        }
+
+        .card::before {
+            content: ""; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), 
+                        linear-gradient(90deg, rgba(255, 0, 0, 0.02), rgba(0, 255, 0, 0.01), rgba(0, 255, 0, 0.02));
+            z-index: 2; background-size: 100% 2px, 3px 100%; pointer-events: none;
+        }
+
+        .glow-title { text-align: center; color: var(--neon-blue); font-size: 24px; font-weight: 900; letter-spacing: 6px; margin: 10px 0 5px 0; text-shadow: 0 0 15px var(--neon-blue); }
+        .sub-title { text-align: center; color: var(--gold); font-size: 10px; letter-spacing: 3px; margin-bottom: 20px; font-weight: bold; opacity: 0.9; }
+
+        .profile-section { 
+            display: flex; align-items: center; border-top: 1px solid #111; border-bottom: 1px solid #111; 
+            padding: 15px 0; margin-bottom: 15px; background: var(--glass-bg);
+        }
+        .pic-container { 
+            width: 75px; height: 75px; border-radius: 12px; border: 1px solid var(--neon-blue); 
+            overflow: hidden; box-shadow: 0 0 20px rgba(0, 210, 255, 0.2); 
+        }
+        .pic-container img { width: 100%; height: 100%; object-fit: cover; filter: grayscale(20%); }
+        .owner-details { margin-left: 20px; }
+        .owner-details h1 { margin: 0; font-size: 22px; letter-spacing: 2px; color: #fff; text-transform: uppercase; }
+        .owner-details p { margin: 3px 0; color: var(--neon-blue); font-size: 11px; font-weight: bold; letter-spacing: 1px; }
+
+        .authority-grid { display: flex; flex-direction: column; gap: 12px; }
+        .permission-item { 
+            display: flex; align-items: flex-start; padding: 10px; 
+            border-left: 2px solid #111; transition: 0.3s;
+        }
+        .permission-item:hover { border-left-color: var(--neon-blue); background: var(--glass-bg); }
+        
+        .icon { font-size: 18px; margin-right: 15px; min-width: 25px; text-align: center; opacity: 0.9; }
+        .text-content h4 { margin: 0; font-size: 13px; color: var(--neon-blue); letter-spacing: 1px; text-transform: uppercase; }
+        .text-content p { margin: 4px 0 0 0; font-size: 9.5px; color: #bbb; line-height: 1.5; font-weight: 300; text-align: justify; }
+
+        .divider { height: 1px; background: linear-gradient(90deg, transparent, #222, transparent); margin: 15px 0; }
+
+        .footer { margin-top: auto; display: flex; justify-content: space-between; align-items: center; padding-top: 15px; border-top: 1px solid #111; }
+        .status-badge { font-size: 10px; color: #33ff33; font-weight: bold; display: flex; align-items: center; gap: 5px; }
+        .status-dot { width: 6px; height: 6px; background: #33ff33; border-radius: 50%; box-shadow: 0 0 10px #33ff33; animation: blink 1.5s infinite; }
+        .issued-date { font-size: 9px; color: #555; font-family: monospace; letter-spacing: 1px; }
+
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
+
+        .card::-webkit-scrollbar { width: 3px; }
+        .card::-webkit-scrollbar-thumb { background: #111; border-radius: 10px; }
+    </style>
+</head>
+<body>
+
+<div class="wrapper">
+    <!-- LOGIN SCREEN (replaced old intro-screen) -->
+    <div id="login-screen">
+        <div class="terminal-header" style="margin-bottom: 10px;">🔐 NIGHTORBIT SECURE ACCESS</div>
+        <h2>FIREBASE AUTHENTICATION</h2>
+        <p>Sign in with your Google account to view the<br>Technical Authority Document.</p>
+        <button id="google-login-btn" class="login-google-btn">⟁ SIGN IN WITH GOOGLE</button>
+        <div style="font-size: 8px; color: #333; margin-top: 25px;">protected by Firebase & Google OAuth 2.0</div>
+    </div>
+
+    <!-- MAIN DOCUMENT (exactly as original, no changes) -->
+    <div id="main-page">
+        <div class="card">
+            <div class="glow-title">NIGHTORBIT</div>
+            <div class="sub-title">TECHNICAL AUTHORITY CLEARANCE</div>
+
+            <div class="profile-section">
+                <div class="pic-container"><img src="Screenshot_20260506-034930_2.jpg" alt="Anas Farooq"></div>
+                <div class="owner-details">
+                    <h1>ANAS FAROOQ</h1>
+                    <p>Lead Developer & System Admin</p>
+                    <p style="font-size: 8px; color: #444; text-transform: uppercase;">project: NightOrbit (Gyidi)</p>
+                </div>
+            </div>
+
+            <div class="authority-grid">
+                <!-- HEADING 1 -->
+                <div style="text-align: left; margin: 10px 0;">
+                    <h1 style="color: #00d2ff; font-size: 12px; letter-spacing: 4px; margin: 0; text-transform: uppercase; text-shadow: 0 0 5px #00d2ff; border-bottom: 1px solid rgba(0, 210, 255, 0.2); padding-bottom: 5px; display: inline-block;">
+                        NIGHTORBIT TECHNICAL AUTHORITY
+                    </h1>
+                </div>
+
+                <div class="permission-item">
+                    <div class="icon">◈</div>
+                    <div class="text-content">
+                        <h4>Cloud Architecture & Firebase Orchestration</h4>
+                        <p>Authorized for the design and deployment of scalable Microservices and real-time data synchronization. Granted full control over Firebase Project Management, including the orchestration of cloud functions and cross-platform resource allocation.</p>
+                    </div>
+                </div>
+
+                <div class="permission-item">
+                    <div class="icon">◈</div>
+                    <div class="text-content">
+                        <h4>Identity Governance & Secure Authentication</h4>
+                        <p>Lead Authority for OAuth 2.0 implementation and Single Sign-On (SSO) integration via Google Identity Services. Fully empowered to manage encrypted user authentication flows, ensuring zero-leakage of tokens, credentials, or sensitive user data.</p>
+                    </div>
+                </div>
+
+                <div class="permission-item">
+                    <div class="icon">◈</div>
+                    <div class="text-content">
+                        <h4>Strategic System Revocation & Security</h4>
+                        <p>Possesses supreme administrative rights to execute real-time system-wide revocation. Authorized to monitor deep-core activities, blacklist malicious entities, and terminate unauthorized access to maintain the integrity of the Nightorbit ecosystem.</p>
+                    </div>
+                </div>
+
+                <div class="permission-item">
+                    <div class="icon">◈</div>
+                    <div class="text-content">
+                        <h4>Advanced Network & Protocol Domination</h4>
+                        <p>Master authority over DNS configuration, SSL/TLS security tunnels, and server-side deployment. Authorized to manipulate system-wide routing and optimize global connectivity for Nightorbit infrastructure.</p>
+                    </div>
+                </div>
+
+                <div class="permission-item">
+                    <div class="icon">◈</div>
+                    <div class="text-content">
+                        <h4>Full-Scale Data Sovereignty & Encryption</h4>
+                        <p>Granted total access to backend data modeling and end-to-end encryption protocols. Empowered to maintain complete privacy standards and execute autonomous database migration within high-security environments.</p>
+                    </div>
+                </div>
+
+                <div class="divider"></div>
+
+                <!-- HEADING 2 -->
+                <div style="text-align: left; margin: 10px 0;">
+                    <h1 style="color: #00d2ff; font-size: 12px; letter-spacing: 4px; margin: 0; text-transform: uppercase; text-shadow: 0 0 5px #00d2ff; border-bottom: 1px solid rgba(0, 210, 255, 0.2); padding-bottom: 5px; display: inline-block;">
+                        NIGHTORBIT OWNER IDENTITY
+                    </h1>
+                </div>
+
+                <div class="permission-item">
+                    <div class="icon">✦</div>
+                    <div class="text-content">
+                        <h4>Lead Developer Excellence</h4>
+                        <p>Anas Farooq is the visionary lead developer behind Nightorbit, recognized for mastering high-level system logic and terminal simulations. With a focus on performance and security, he ensures every protocol meets global engineering standards.</p>
+                    </div>
+                </div>
+
+                <div class="permission-item">
+                    <div class="icon">✦</div>
+                    <div class="text-content">
+                        <h4>Master Administrative Governance</h4>
+                        <p>As the primary owner and lead admin, Anas Farooq holds total governance over the Nightorbit project. He is the final decision-maker for all technical certifications, official releases, and the overarching digital landscape of the platform.</p>
+                    </div>
+                </div>
+
+                <div class="permission-item">
+                    <div class="icon">✦</div>
+                    <div class="text-content">
+                        <h4>Supreme Technical Authority Statement</h4>
+                        <p>This document serves as an official verification of Anas Farooq's technical supremacy within the Nightorbit domain. His expertise in full-stack development and security architecture remains the core foundation of the system's operational success.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer">
+                <div class="status-badge"><div class="status-dot"></div> ONLINE_AUTHENTICATED</div>
+                <div class="issued-date">SYSTEM_STAMP: 24-JAN-2026</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
