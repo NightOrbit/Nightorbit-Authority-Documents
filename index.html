@@ -70,10 +70,13 @@
         const auth = firebase.auth();
         const provider = new firebase.auth.GoogleAuthProvider();
 
+        // IMPORTANT: Set persistence to NONE so that refresh or back button logs out user
+        auth.setPersistence(firebase.auth.Auth.Persistence.NONE)
+            .catch(error => console.error("Persistence error:", error));
+
         function handleGoogleLogin() {
             auth.signInWithPopup(provider)
                 .then(() => {
-                    // Replace history to prevent back button showing login screen
                     history.replaceState(null, '', location.href);
                     document.getElementById('login-screen').style.display = 'none';
                     document.getElementById('main-page').style.display = 'flex';
@@ -95,7 +98,7 @@
             
             auth.onAuthStateChanged(user => {
                 if (user) {
-                    // Already logged in: replace history and show main page
+                    // Already logged in (but with NONE persistence, this won't happen on refresh)
                     history.replaceState(null, '', location.href);
                     document.getElementById('login-screen').style.display = 'none';
                     document.getElementById('main-page').style.display = 'flex';
@@ -159,14 +162,10 @@
             box-shadow: 0 0 60px rgba(0, 0, 0, 1); position: relative; overflow-y: auto;
         }
 
-        .card::before {
-            content: ""; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), 
-                        linear-gradient(90deg, rgba(255, 0, 0, 0.02), rgba(0, 255, 0, 0.01), rgba(0, 255, 0, 0.02));
-            z-index: 2; background-size: 100% 2px, 3px 100%; pointer-events: none;
-        }
+        /* REMOVED the scanline effect that was causing "line above text" blurriness */
+        /* .card::before removed entirely to fix text clarity */
 
-        .glow-title { text-align: center; color: var(--neon-blue); font-size: 24px; font-weight: 900; letter-spacing: 6px; margin: 10px 0 5px 0; text-shadow: 0 0 15px var(--neon-blue); }
+        .glow-title { text-align: center; color: var(--neon-blue); font-size: 24px; font-weight: 900; letter-spacing: 6px; margin: 10px 0 5px 0; text-shadow: none; } /* text-shadow removed for crispness */
         .sub-title { text-align: center; color: var(--gold); font-size: 10px; letter-spacing: 3px; margin-bottom: 20px; font-weight: bold; opacity: 0.9; }
 
         .profile-section { 
@@ -177,14 +176,13 @@
             width: 75px; height: 75px; border-radius: 12px; border: 1px solid var(--neon-blue); 
             overflow: hidden; box-shadow: 0 0 20px rgba(0, 210, 255, 0.2); 
         }
-        /* IMAGE FIX: Removed grayscale, added crisp rendering */
+        /* IMAGE FIX: removed any potential blur, made rendering crisp but clear */
         .pic-container img { 
             width: 100%; 
             height: 100%; 
             object-fit: cover; 
-            image-rendering: crisp-edges; 
-            image-rendering: pixelated; 
-            image-rendering: -webkit-optimize-contrast;
+            image-rendering: auto;  /* changed from crisp-edges to auto for clarity */
+            display: block;
         }
         .owner-details { margin-left: 20px; }
         .owner-details h1 { margin: 0; font-size: 22px; letter-spacing: 2px; color: #fff; text-transform: uppercase; }
@@ -245,7 +243,7 @@
             <div class="authority-grid">
                 <!-- HEADING 1 -->
                 <div style="text-align: left; margin: 10px 0;">
-                    <h1 style="color: #00d2ff; font-size: 12px; letter-spacing: 4px; margin: 0; text-transform: uppercase; text-shadow: 0 0 5px #00d2ff; border-bottom: 1px solid rgba(0, 210, 255, 0.2); padding-bottom: 5px; display: inline-block;">
+                    <h1 style="color: #00d2ff; font-size: 12px; letter-spacing: 4px; margin: 0; text-transform: uppercase; text-shadow: none; border-bottom: 1px solid rgba(0, 210, 255, 0.2); padding-bottom: 5px; display: inline-block;">
                         NIGHTORBIT TECHNICAL AUTHORITY
                     </h1>
                 </div>
@@ -294,7 +292,7 @@
 
                 <!-- HEADING 2 -->
                 <div style="text-align: left; margin: 10px 0;">
-                    <h1 style="color: #00d2ff; font-size: 12px; letter-spacing: 4px; margin: 0; text-transform: uppercase; text-shadow: 0 0 5px #00d2ff; border-bottom: 1px solid rgba(0, 210, 255, 0.2); padding-bottom: 5px; display: inline-block;">
+                    <h1 style="color: #00d2ff; font-size: 12px; letter-spacing: 4px; margin: 0; text-transform: uppercase; text-shadow: none; border-bottom: 1px solid rgba(0, 210, 255, 0.2); padding-bottom: 5px; display: inline-block;">
                         NIGHTORBIT OWNER IDENTITY
                     </h1>
                 </div>
