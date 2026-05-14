@@ -11,7 +11,7 @@
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
-      "project": "NIGHTORIT (GYIDI)"
+      "project": "NIGHTORIT (GYIDI)",
       "name": "Anas Farooq",
       "givenName": "Anas",
       "familyName": "Farooq",
@@ -24,43 +24,20 @@
     }
     </script>
 
+    <!-- Firebase SDK - Fixed Google Login -->
     <script type="module">
-  // Import the functions you need from the SDKs you need
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-app.js";
-  import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-analytics.js";
-  // TODO: Add SDKs for Firebase products that you want to use
-  // https://firebase.google.com/docs/web/setup#available-libraries
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-app.js";
+        import { getAuth, signInWithPopup, GoogleAuthProvider, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-auth.js";
 
-  // Your web app's Firebase configuration
-  // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-  const firebaseConfig = {
-    apiKey: "AIzaSyBxCZnAdaP8TCnqDJVsBWJB-4JcS4sIPuo",
-    authDomain: "nightorbit-permission-document.firebaseapp.com",
-    projectId: "nightorbit-permission-document",
-    storageBucket: "nightorbit-permission-document.firebasestorage.app",
-    messagingSenderId: "204855308035",
-    appId: "1:204855308035:web:fb6a5f309b49bf337c8336",
-    measurementId: "G-1TZ710T0GW"
-  };
-
-  // Initialize Firebase
-  const app = initializeApp(firebaseConfig);
-  const analytics = getAnalytics(app);
-</script>
-
-    <!-- Firebase SDK -->
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-        import { getAuth, signInWithPopup, GoogleAuthProvider, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
-
-        // 🔥 YAHAN APNA FIREBASE CONFIG PASTE KAREIN (JO Firebase Console se milega)
+        // Your real Firebase configuration (provided by you)
         const firebaseConfig = {
-            apiKey: "YOUR_API_KEY",
-            authDomain: "YOUR_AUTH_DOMAIN",
-            projectId: "YOUR_PROJECT_ID",
-            storageBucket: "YOUR_STORAGE_BUCKET",
-            messagingSenderId: "YOUR_SENDER_ID",
-            appId: "YOUR_APP_ID"
+            apiKey: "AIzaSyBxCZnAdaP8TCnqDJVsBWJB-4JcS4sIPuo",
+            authDomain: "nightorbit-permission-document.firebaseapp.com",
+            projectId: "nightorbit-permission-document",
+            storageBucket: "nightorbit-permission-document.firebasestorage.app",
+            messagingSenderId: "204855308035",
+            appId: "1:204855308035:web:fb6a5f309b49bf337c8336",
+            measurementId: "G-1TZ710T0GW"
         };
 
         const app = initializeApp(firebaseConfig);
@@ -82,11 +59,9 @@
 
         onAuthStateChanged(auth, (user) => {
             if (user) {
-                // Logged in – show main document
                 loginScreen.style.display = 'none';
                 mainPage.style.display = 'flex';
             } else {
-                // Logged out – show login screen
                 loginScreen.style.display = 'flex';
                 mainPage.style.display = 'none';
             }
@@ -112,7 +87,7 @@
 
         .wrapper { width: 95%; max-width: 440px; height: 98vh; display: flex; flex-direction: column; justify-content: center; }
 
-        /* Login screen (replaces old intro-screen) */
+        /* Login screen */
         #login-screen {
             background: #000; padding: 30px; border-radius: 15px;
             border: 1px solid var(--neon-blue); box-shadow: 0 0 40px rgba(0, 210, 255, 0.2);
@@ -193,7 +168,7 @@
 <body>
 
 <div class="wrapper">
-    <!-- LOGIN SCREEN (replaced old intro-screen) -->
+    <!-- LOGIN SCREEN -->
     <div id="login-screen">
         <div class="terminal-header" style="margin-bottom: 10px;">🔐 NIGHTORBIT SECURE ACCESS</div>
         <h2>FIREBASE AUTHENTICATION</h2>
@@ -202,7 +177,7 @@
         <div style="font-size: 8px; color: #333; margin-top: 25px;">protected by Firebase & Google OAuth 2.0</div>
     </div>
 
-    <!-- MAIN DOCUMENT (exactly as original, no changes) -->
+    <!-- MAIN DOCUMENT (exactly as original) -->
     <div id="main-page">
         <div class="card">
             <div class="glow-title">NIGHTORBIT</div>
