@@ -11,7 +11,7 @@
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
-      "project": "NIGHTORIT (GYIDI)",
+      "@type": "Person",
       "name": "Anas Farooq",
       "givenName": "Anas",
       "familyName": "Farooq",
@@ -24,50 +24,53 @@
     }
     </script>
 
-    <!-- Firebase SDK - Fixed Google Login -->
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-app.js";
-        import { getAuth, signInWithPopup, GoogleAuthProvider, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-auth.js";
+    <!-- Firebase SDK (from my-market project) -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth-compat.js"></script>
 
-        // Your real Firebase configuration (provided by you)
+    <script>
+        // Firebase configuration from your "my market" project
         const firebaseConfig = {
-            apiKey: "AIzaSyBxCZnAdaP8TCnqDJVsBWJB-4JcS4sIPuo",
-            authDomain: "nightorbit-permission-document.firebaseapp.com",
-            projectId: "nightorbit-permission-document",
-            storageBucket: "nightorbit-permission-document.firebasestorage.app",
-            messagingSenderId: "204855308035",
-            appId: "1:204855308035:web:fb6a5f309b49bf337c8336",
-            measurementId: "G-1TZ710T0GW"
+            apiKey: "AIzaSyBxJqJkrAaFf3eR0QWvhet6IvvFVHYExeU",
+            authDomain: "my-market-ff254.firebaseapp.com",
+            projectId: "my-market-ff254",
+            storageBucket: "my-market-ff254.appspot.com",
+            messagingSenderId: "1039626785987",
+            appId: "1:1039626785987:web:ae5a65a0b16444a2cffe76",
+            databaseURL: "https://my-market-ff254-default-rtdb.firebaseio.com"
         };
+        
+        firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+        const provider = new firebase.auth.GoogleAuthProvider();
 
-        const app = initializeApp(firebaseConfig);
-        const auth = getAuth(app);
-        const provider = new GoogleAuthProvider();
+        function handleGoogleLogin() {
+            auth.signInWithPopup(provider)
+                .then(() => {
+                    document.getElementById('login-screen').style.display = 'none';
+                    document.getElementById('main-page').style.display = 'flex';
+                })
+                .catch(error => {
+                    console.error("Login error:", error);
+                    alert("Google Login failed: " + error.message);
+                });
+        }
 
-        const loginScreen = document.getElementById('login-screen');
-        const mainPage = document.getElementById('main-page');
-        const loginBtn = document.getElementById('google-login-btn');
+        function checkAuthState() {
+            auth.onAuthStateChanged(user => {
+                if (user) {
+                    document.getElementById('login-screen').style.display = 'none';
+                    document.getElementById('main-page').style.display = 'flex';
+                } else {
+                    document.getElementById('login-screen').style.display = 'flex';
+                    document.getElementById('main-page').style.display = 'none';
+                }
+            });
+        }
 
-        window.handleGoogleLogin = async () => {
-            try {
-                await signInWithPopup(auth, provider);
-            } catch (error) {
-                console.error("Login error:", error);
-                alert("Login failed: " + error.message);
-            }
+        window.onload = () => {
+            checkAuthState();
         };
-
-        onAuthStateChanged(auth, (user) => {
-            if (user) {
-                loginScreen.style.display = 'none';
-                mainPage.style.display = 'flex';
-            } else {
-                loginScreen.style.display = 'flex';
-                mainPage.style.display = 'none';
-            }
-        });
-
-        loginBtn.onclick = window.handleGoogleLogin;
     </script>
 
     <style>
@@ -87,7 +90,7 @@
 
         .wrapper { width: 95%; max-width: 440px; height: 98vh; display: flex; flex-direction: column; justify-content: center; }
 
-        /* Login screen */
+        /* Login Screen (replaces old intro-screen) */
         #login-screen {
             background: #000; padding: 30px; border-radius: 15px;
             border: 1px solid var(--neon-blue); box-shadow: 0 0 40px rgba(0, 210, 255, 0.2);
@@ -168,16 +171,16 @@
 <body>
 
 <div class="wrapper">
-    <!-- LOGIN SCREEN -->
+    <!-- LOGIN SCREEN (replaces old intro-screen) -->
     <div id="login-screen">
         <div class="terminal-header" style="margin-bottom: 10px;">🔐 NIGHTORBIT SECURE ACCESS</div>
         <h2>FIREBASE AUTHENTICATION</h2>
         <p>Sign in with your Google account to view the<br>Technical Authority Document.</p>
-        <button id="google-login-btn" class="login-google-btn">⟁ SIGN IN WITH GOOGLE</button>
+        <button class="login-google-btn" onclick="handleGoogleLogin()">⟁ SIGN IN WITH GOOGLE</button>
         <div style="font-size: 8px; color: #333; margin-top: 25px;">protected by Firebase & Google OAuth 2.0</div>
     </div>
 
-    <!-- MAIN DOCUMENT (exactly as original) -->
+    <!-- MAIN AUTHORITY DOCUMENT (exactly as original, no changes) -->
     <div id="main-page">
         <div class="card">
             <div class="glow-title">NIGHTORBIT</div>
